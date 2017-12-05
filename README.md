@@ -24,6 +24,11 @@ The term "Type assertion" in **tssert** is a bit different from what it means in
 ### Where?
 **tssert** can be used by library developers who uses mixin's and / or complex type manipulation using generics, unions and intersections.
 
+The typescript team uses a similar tool to test their own compiler but instead of JSDoc annotation to describe output types they create a snapshot
+of the types as baseline and compare.
+
+TSLint also uses a similar approach but instead of JSDoc annotation they use special TS like file with markers where a TSLint error should occur.
+
 ### How
 **tssser** uses a declerative syntax in JSDoc format to assert an expected outcome from the TS Compiler.
 
@@ -119,6 +124,7 @@ Promise.resolve('str')
     return y;
   });
 ```
+![q9lw1jivxk](https://user-images.githubusercontent.com/5377501/33637214-52048c22-da28-11e7-979b-6430ff63d40c.gif)
 
 Note that the position must be set on an expression or identifier, some positions might not return a property type.
 
