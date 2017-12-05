@@ -1,0 +1,24 @@
+{
+  "name": "tssert",
+  "version": "0.0.3",
+  "main": "src/index.js",
+  "bin": {
+    "tssert": "src/test-runner.js"
+  },
+  "typings": "src/index.d.ts",
+  "scripts": {
+    "build": "node_modules/.bin/tsc",
+    "examples:build": "npm run build && node dist/src/test-runner.js -p tsconfig.examples.json"
+  },
+  "devDependencies": {
+    "@types/chalk": "^2.2.0",
+    "@types/chokidar": "^1.7.0",
+    "@types/node": "^8.0.54"
+  },
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "chokidar": "^1.7.0",
+    "tsutils": "^2.13.0",
+    "typescript": "2.4.2"
+  }
+}
