@@ -59,9 +59,10 @@ const myStr: string = 15;
 ```
 
 The output:
-
+![image](https://user-images.githubusercontent.com/5377501/33636276-251e6e20-da24-11e7-8a21-5943705bb8ad.png)
 
 Now let's change `@tsError` to 9999 so it will fail:
+![image](https://user-images.githubusercontent.com/5377501/33636311-4902d16e-da24-11e7-89f0-d06a5e51e1ed.png)
 
 
 we can define multiple assertions for the same expression:
