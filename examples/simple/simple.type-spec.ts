@@ -1,9 +1,9 @@
  /**
- * @tssert
+ * @tssert THIS IS AN OPTIONAL MESSAGE TO INCLUDE WITH THE ERROR
  * @tsError 2322
  * @loc 7
  */
-const myStr1: string = 15;
+const myStr: string = 15;
 
  /**
  * @tssert

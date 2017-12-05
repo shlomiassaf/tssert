@@ -50,13 +50,19 @@ Since we expect the compiler to throw a semantic error, number 2322 (TS2322) at 
 We can also expect an exact match for the text message:
 ```ts
  /**
- * @tssert
+ * @tssert THIS IS AN OPTIONAL MESSAGE TO INCLUDE WITH THE ERROR
  * @tsError 2322
  * @tsErrorMsg Type '15' is not assignable to type 'string'.
  * @loc 7
  */
 const myStr: string = 15;
 ```
+
+The output:
+
+
+Now let's change `@tsError` to 9999 so it will fail:
+
 
 we can define multiple assertions for the same expression:
 ```ts
