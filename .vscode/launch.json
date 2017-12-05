@@ -1,0 +1,29 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run",
+      "program": "${workspaceFolder}/run-local.js",
+      "args": [
+        "-p",
+        "tsconfig.examples.json"        
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run in watch mode",
+      "program": "${workspaceFolder}/run-local.js",
+      "args": [
+        "-p",
+        "tsconfig.examples.json",
+        "-w"
+      ]
+    }
+  ]
+}
