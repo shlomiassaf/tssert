@@ -29,6 +29,9 @@ of the types as baseline and compare.
 
 TSLint also uses a similar approach but instead of JSDoc annotation they use special TS like file with markers where a TSLint error should occur.
 
+I use **tssert** in some of the libraries I build, libraries that contain mixin's and user defined type insertion through plugins.
+Through development I found that sometime the projected types resulted in `any` type, usually after TS version upgrades so I used error assertions.
+
 ### How
 **tssser** uses a declerative syntax in JSDoc format to assert an expected outcome from the TS Compiler.
 
