@@ -46,3 +46,18 @@ Promise.resolve('str')
   const y: string = value;
   return y;
 });
+
+interface MyType<T> { promiseOfT(): Promise<T>; }
+declare function myTypeFactory<T>(): MyType<T>;
+
+/**
+ * @tssert
+ * @tsType MyType<string>
+ * @loc 10
+ */
+/**
+ * @tssert
+ * @tsType Promise<string>
+ * @loc 25
+ */
+myTypeFactory<string>().promiseOfT();

@@ -8,6 +8,7 @@
   "typings": "src/index.d.ts",
   "scripts": {
     "build": "node_modules/.bin/tsc",
+    "watch": "node_modules/.bin/tsc -w",
     "examples:build": "npm run build && node dist/src/test-runner.js -p tsconfig.examples.json"
   },
   "devDependencies": {

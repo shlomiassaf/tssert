@@ -90,10 +90,39 @@ export class SemanticTypeAssertion extends BaseAssertion {
     const typeLine = line + this.line;
     const pos = ts.getPositionOfLineAndCharacter(sf, typeLine, this.char);
     const checker = program.getTypeChecker();
-    const typeCandidates = TsExt.getExpressionOrIdentifierNodesAtPosition(node, pos, sf);
+    const typeCandidates = TsExt.getExpressionOrIdentifierNodesAtPosition(node, pos, true, sf);
 
-    if (typeCandidates.length === 0) {
-      const error: SemanticAssertionDiagnostics = {
+    // try matching a type from the last type in the list, which is the deepest
+    for (let child of typeCandidates.reverse()) {
+      const typeStr = checker.typeToString(checker.getTypeAtLocation(child));
+      if (typeStr === this.tsType) {
+        return;          
+      }
+    }
+
+    // if we are here it means no match, return an error
+    // we return the last type in the error, again since it most specific and what user intended
+    // if nothing found we return different error.
+    const last = typeCandidates.pop();
+    let error: SemanticAssertionDiagnostics;
+    if (last) {
+      const typeStr = checker.typeToString(checker.getTypeAtLocation(last));
+      error = {
+        name: 'SemanticTypeAssertion',
+        file: sf,
+        start: pos,
+        length: last.getWidth(sf),
+        messageText: `Expected type "${this.tsType}" but found "${typeStr}"`,
+        source: DIAGNOSTIC_SOURCE,
+        category: ts.DiagnosticCategory.Error,
+        code: 9000,
+        node
+      };
+      if (this.tssert) {
+        error.description = this.tssert;
+      }
+    } else {
+      error = {
         name: 'SemanticTypeAssertion',
         file: sf,
         start: ts.getPositionOfLineAndCharacter(sf, typeLine, this.char),
@@ -104,29 +133,8 @@ export class SemanticTypeAssertion extends BaseAssertion {
         code: 9000,
         node
       };
-      return { diagnosticIndex: -1, error };
-    } else {
-      for (let child of typeCandidates) {
-        const typeStr = checker.typeToString(checker.getTypeAtLocation(child));
-        if (typeStr !== this.tsType) {
-          const error: SemanticAssertionDiagnostics = {
-            name: 'SemanticTypeAssertion',
-            file: sf,
-            start: pos,
-            length: child.getWidth(sf),
-            messageText: `Expected type "${this.tsType}" but found "${typeStr}"`,
-            source: DIAGNOSTIC_SOURCE,
-            category: ts.DiagnosticCategory.Error,
-            code: 9000,
-            node
-          };
-          if (this.tssert) {
-            error.description = this.tssert;
-          }
-          return { diagnosticIndex: -1, error };
-        }
-      }
     }
+    return { diagnosticIndex: -1, error };
   }
 
   static keys = ['tsType'];

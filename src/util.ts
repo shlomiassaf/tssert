@@ -64,13 +64,20 @@ export namespace TsExt {
    */
   export function getExpressionOrIdentifierNodesAtPosition(node: ts.Node,
                                                            pos: number,
+                                                           deep: boolean = false,
                                                            sourceFile?: ts.SourceFile): ts.Node[] {
-    return node.getChildren(sourceFile || node.getSourceFile())
+    const result = node.getChildren(sourceFile || node.getSourceFile())
       .filter( child => {
         return child.end > pos
           && pos > child.pos
           && (isExpressionNode(child) || child.kind === ts.SyntaxKind.Identifier);
       });
+    if (deep) {
+      const deepGet = result
+        .map( child => getExpressionOrIdentifierNodesAtPosition(child, pos, deep, sourceFile) );
+      deepGet.forEach( c => result.push(...c) );
+    }
+    return result;
   }
 
   /* Code below Copied from https://github.com/Microsoft/TypeScript/blob/master/src/compiler/utilities.ts */
